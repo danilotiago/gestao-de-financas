@@ -1,15 +1,35 @@
 const express = require('express')
+const auth = require('./auth')
+const authService = require('../api/user/authService')
 const billingCycleService = require('../api/billingCycle/billingCycleService')
 const billingCycleSummaryService = require('../api/billingSummary/billingSummaryService')
 
 module.exports = server => {
+
+    /**
+     * rotas abertas
+     */
+    const openApi = express.Router()
+
+    openApi.post('/login', authService.login)
+    openApi.post('/signup', authService.signup)
+    openApi.post('/validateToken', authService.validateToken)
     
-    const router = express.Router()
+    /**
+     * rotas protegidas
+     */
+    const protectedApi = express.Router()
 
-    billingCycleService.register(router, '/billingCycles')
+    protectedApi.use(auth)
 
-    server.use('/api', router)
+    billingCycleService.register(protectedApi, '/billingCycles')
 
-    router.route('/billingSummary')
+    protectedApi.route('/billingSummary')
         .get(billingCycleSummaryService.getSummary)
+
+    /**
+     * registrando rotas no express
+     */
+    server.use('/oapi', openApi)
+    server.use('/api', protectedApi)
 }
