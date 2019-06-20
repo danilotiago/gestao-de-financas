@@ -1,5 +1,6 @@
 const express = require('express')
 const billingCycleService = require('../api/billingCycle/billingCycleService')
+const billingCycleSummaryService = require('../api/billingSummary/billingSummaryService')
 
 module.exports = server => {
     
@@ -9,4 +10,6 @@ module.exports = server => {
 
     server.use('/api', router)
 
+    router.route('/billingSummary')
+        .get(billingCycleSummaryService.getSummary)
 }
