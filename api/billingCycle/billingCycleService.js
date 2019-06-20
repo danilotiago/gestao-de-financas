@@ -9,4 +9,15 @@ billingCycle.updateOptions({
     runValidators: true
 })
 
+billingCycle.route('count', function(req, res, next) {
+    billingCycle.countDocuments(function(error, value) {
+        if (error) {
+            res.status(500).json({errors: [error]})
+        } else {
+            res.json({value})
+        }
+    })
+})
+
+
 module.exports = billingCycle
