@@ -2,10 +2,10 @@
   "name": "financeiro_pessoal",
   "version": "1.0.0",
   "description": "backend do sistema de financeiro pessoal",
-  "main": "loader.js",
+  "main": "src/loader.js",
   "scripts": {
-    "dev": "nodemon loader.js",
-    "production": "pm2 start loader.js --name financeiro_pessoal"
+    "dev": "nodemon src/loader.js",
+    "production": "pm2 start src/loader.js --name financeiro_pessoal"
   },
   "author": "danilotiago",
   "license": "ISC",
